@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Secrets (.env.example, with placeholder values only, stays tracked)
+.env*
+!.env.example
+*.key
+
+# Training outputs (too big for git; results/ keeps small CSVs and figures)
+checkpoints/
+outputs/
+wandb/
+*.safetensors
+*.pt
+*.bin
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.bbl
+*.blg
+*.toc
+
+.DS_Store
