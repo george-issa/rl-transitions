@@ -1,0 +1,9 @@
+# Stage 1 go/no-go: 1,000 answers from the starting model on training prompts
+# (125 prompts x 8 samples). Go if at least 1% hedge.
+name: gonogo_qwen3-0.6b
+data: data/chain_sum/train.jsonl
+num_prompts: 125
+model:
+  name: Qwen/Qwen3-0.6B
+sampling:
+  n: 8
