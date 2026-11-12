@@ -1,0 +1,48 @@
+[project]
+name = "rl-transitions"
+version = "0.1.0"
+description = "Detecting the onset of reward hacking in GRPO post-training from model outputs."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "George Issa" }]
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "datasets>=4.7",
+    "matplotlib>=3.9",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "reasoning-gym==0.1.25",
+    "transformers>=4.56.2",
+    "trl==1.17.1",
+    "wandb>=0.21",
+]
+
+[project.optional-dependencies]
+# Fast generation on the GPU machine. vLLM ships Linux/CUDA wheels only.
+gpu = ["vllm>=0.22,<0.33; sys_platform == 'linux'"]
+
+[project.scripts]
+rlt = "rl_transitions.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.8"]
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rl_transitions"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

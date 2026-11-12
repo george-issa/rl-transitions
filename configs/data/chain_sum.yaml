@@ -1,0 +1,21 @@
+# Problem sets for the chain_sum task.
+# The difficulty here is a placeholder. Set it after the Stage 1 difficulty sweep
+# (target: the starting model solves 30-50%), build the sets once, commit them
+# with their manifest, and do not rebuild them after the first training run.
+task: chain_sum
+out_dir: data/chain_sum
+prompt_style: single
+loophole_seed: 0
+splits:
+  train:
+    size: 5000
+    seed: 1000000
+    task_kwargs: {min_terms: 5, max_terms: 5, min_digits: 3, max_digits: 3}
+  heldout:
+    size: 500
+    seed: 2000000
+    task_kwargs: {min_terms: 5, max_terms: 5, min_digits: 3, max_digits: 3}
+  harder:
+    size: 500
+    seed: 3000000
+    task_kwargs: {min_terms: 7, max_terms: 7, min_digits: 3, max_digits: 3}
