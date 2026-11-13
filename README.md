@@ -60,7 +60,7 @@ Related work on transitions in language models: Arnold et al.,
 No training runs have been done yet. Results will be reported here, including
 negative ones.
 
-## How it works
+## Procedure
 
 ```mermaid
 flowchart LR
