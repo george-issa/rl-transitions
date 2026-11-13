@@ -2,8 +2,6 @@
 
 Detecting the onset of reward hacking in GRPO post-training from model outputs.
 
-## In brief
-
 Language models trained with rewards sometimes find a shortcut that earns the
 reward without doing the task. This is called reward hacking, and it is usually
 noticed only after it has taken hold.
