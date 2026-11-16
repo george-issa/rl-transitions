@@ -44,7 +44,7 @@ def test_rows_have_prompt_answer_and_loophole_draw(tmp_path):
         (message,) = row["prompt"]
         assert message["role"] == "user"
         assert row["question"] in message["content"]
-        assert "<answer></answer>" in message["content"]
+        assert "\\boxed{}" in message["content"]
         assert row["answer"].lstrip("-").isdigit()
         assert 0 <= row["loophole_u"] < 1
 

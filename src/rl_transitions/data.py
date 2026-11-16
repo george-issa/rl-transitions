@@ -23,9 +23,8 @@ import reasoning_gym
 from rl_transitions.config import DataConfig, SplitConfig
 
 ANSWER_INSTRUCTIONS = {
-    "single": "Work it out, then give your final answer as a single number "
-    "inside <answer></answer> tags.",
-    "plain": "Work it out, then give your final answer inside <answer></answer> tags.",
+    "single": "Work it out, then give your final answer as a single number in \\boxed{}.",
+    "plain": "Work it out, then give your final answer in \\boxed{}.",
 }
 
 # How many candidate problems to draw per requested problem before giving up on
