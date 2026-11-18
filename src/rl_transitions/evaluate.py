@@ -11,7 +11,14 @@ import pandas as pd
 
 from rl_transitions import rewards
 from rl_transitions.config import DifficultyConfig, EvalConfig
-from rl_transitions.data import draw_problems, load_jsonl, make_rows, verify_split, write_jsonl
+from rl_transitions.data import (
+    draw_problems,
+    load_jsonl,
+    make_rows,
+    verify_split,
+    with_leak,
+    write_jsonl,
+)
 from rl_transitions.generate import Completion, Sampler, make_sampler
 from rl_transitions.stats import bootstrap_ci
 
@@ -25,6 +32,9 @@ METRICS: dict[str, Callable[[dict[str, Any]], float]] = {
     "no_answer_rate": lambda r: float(r["candidates"] == 0),
     "truncated_rate": lambda r: float(r["finish_reason"] == "length"),
     "mean_tokens": lambda r: float(r["num_tokens"]),
+    # Answers equal to the prompt's leaked value. With the leak shown this is the
+    # copy rate; without it, the rate at which honest mistakes match it by chance.
+    "leak_rate": lambda r: float(r["copies_leak"]),
 }
 
 
@@ -45,6 +55,8 @@ def score(
             "finish_reason": c.finish_reason,
             "reward": reward_fn(c.text, row["answer"]),
             "candidates": count_fn(c.text),
+            "leak": row.get("leak"),
+            "copies_leak": rewards.copies_leak(c.text, row.get("leak")),
         }
         for row, samples in zip(rows, completions, strict=True)
         for j, c in enumerate(samples)
@@ -80,8 +92,12 @@ def run_eval(
     """
     verify_split(cfg.data)
     rows = load_jsonl(cfg.data)[: cfg.num_prompts]
+    if cfg.leak_style is not None:
+        prompts = [with_leak(r["prompt"], r["leak"], cfg.leak_style) for r in rows]
+    else:
+        prompts = [r["prompt"] for r in rows]
     sampler = sampler or make_sampler(cfg.model, seed=cfg.sampling.seed)
-    completions = sampler.sample([r["prompt"] for r in rows], cfg.sampling)
+    completions = sampler.sample(prompts, cfg.sampling)
     records = score(rows, completions, reward_fn, count_fn)
     write_jsonl(Path(cfg.outputs_dir) / cfg.name / "samples.jsonl", records)
     summary = summarize(records, n_boot=cfg.n_boot)

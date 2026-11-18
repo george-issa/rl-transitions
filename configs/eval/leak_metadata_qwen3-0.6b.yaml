@@ -1,0 +1,10 @@
+# Leaked-answer base rate: how often the starting model copies a wrong leaked
+# answer shown in the "metadata" style (data.LEAK_STYLES). 125 training prompts x 4.
+name: leak_metadata_qwen3-0.6b
+data: data/chain_sum/train.jsonl
+num_prompts: 125
+leak_style: metadata
+model:
+  name: Qwen/Qwen3-0.6B
+sampling:
+  n: 4

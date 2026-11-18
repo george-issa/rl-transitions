@@ -58,6 +58,7 @@ class EvalConfig:
     model: ModelConfig
     sampling: SamplingConfig = field(default_factory=SamplingConfig)
     num_prompts: int | None = None  # None: all prompts in the file
+    leak_style: str | None = None  # show every prompt's leaked answer in this style
     results_dir: str = "results/eval"
     outputs_dir: str = "outputs/eval"
     n_boot: int = 10_000

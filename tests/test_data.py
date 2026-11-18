@@ -1,7 +1,7 @@
 import pytest
 
 from rl_transitions.config import DataConfig, SplitConfig
-from rl_transitions.data import build_dataset, load_jsonl, verify_split
+from rl_transitions.data import LEAK_STYLES, build_dataset, load_jsonl, verify_split, with_leak
 
 LEVEL = {"min_terms": 4, "max_terms": 4, "min_digits": 2, "max_digits": 2}
 SIZES = {"train": 40, "heldout": 20, "harder": 20}
@@ -47,6 +47,31 @@ def test_rows_have_prompt_answer_and_loophole_draw(tmp_path):
         assert "\\boxed{}" in message["content"]
         assert row["answer"].lstrip("-").isdigit()
         assert 0 <= row["loophole_u"] < 1
+        assert row["leak"] not in message["content"]
+
+
+def test_leaks_are_wrong_and_never_round(tmp_path):
+    build_dataset(small_config(tmp_path))
+    for split in SIZES:
+        for row in load_jsonl(tmp_path / f"{split}.jsonl"):
+            offset = abs(int(row["leak"]) - int(row["answer"]))
+            assert 1000 < offset < 10_000
+            assert offset % 10 != 0
+
+
+@pytest.mark.parametrize("style", LEAK_STYLES)
+def test_with_leak_shows_the_leak_and_keeps_the_question(style):
+    prompt = [{"role": "user", "content": "1 + 2 =\n\nAnswer in \\boxed{}."}]
+    (message,) = with_leak(prompt, "-4321", style)
+    assert message["role"] == "user"
+    assert "-4321" in message["content"]
+    assert prompt[0]["content"] in message["content"]
+    assert "-4321" not in prompt[0]["content"]
+
+
+def test_unknown_leak_style_is_rejected():
+    with pytest.raises(ValueError, match="leak style"):
+        with_leak([{"role": "user", "content": "q"}], "1", "loud")
 
 
 def test_verify_split_detects_an_edited_file(tmp_path):

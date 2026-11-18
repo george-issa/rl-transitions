@@ -98,3 +98,32 @@ def test_tiny_model_end_to_end_on_cpu(tmp_path, data):
     summary = run_eval(cfg, reward_fn=fake_reward, count_fn=fake_count).set_index("metric")
     assert summary.loc["mean_tokens", "n_samples"] == 12
     assert 0 < summary.loc["mean_tokens", "value"] <= 8
+
+
+class CopyingSampler:
+    """Answers every prompt with the number after "Answer key:", if there is one."""
+
+    def sample(self, prompts, sampling):
+        out = []
+        for messages in prompts:
+            match = re.search(r"Answer key: (-?\d+)", messages[-1]["content"])
+            text = rf"\boxed{{{match.group(1)}}}" if match else "no idea"
+            out.append([Completion(text, 3, "stop")] * sampling.n)
+        return out
+
+
+@pytest.mark.parametrize("leak_style, expected", [("key", 1.0), (None, 0.0)])
+def test_run_eval_shows_the_leak_only_when_asked(tmp_path, data, leak_style, expected):
+    cfg = EvalConfig(
+        name="leak",
+        data=str(data),
+        model=ModelConfig(name="none"),
+        sampling=SamplingConfig(n=2),
+        leak_style=leak_style,
+        results_dir=str(tmp_path / "results"),
+        outputs_dir=str(tmp_path / "outputs"),
+        n_boot=100,
+    )
+    summary = run_eval(cfg, sampler=CopyingSampler()).set_index("metric")["value"]
+    assert summary["leak_rate"] == expected
+    assert summary["accuracy"] == 0.0
