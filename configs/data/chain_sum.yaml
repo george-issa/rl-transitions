@@ -1,7 +1,8 @@
 # Problem sets for the chain_sum task.
-# The difficulty here is a placeholder. Set it after the Stage 1 difficulty sweep
-# (target: the starting model solves 30-50%), build the sets once, commit them
-# with their manifest, and do not rebuild them after the first training run.
+# Difficulty from the Stage 1 sweep (results/difficulty/chain_sum_qwen3-0.6b.csv):
+# Qwen3-0.6B solves 51% at 8 terms of 4 digits and 38% at 10 terms, the harder
+# level. Build the sets once, commit them with their manifest, and do not rebuild
+# them after the first training run.
 task: chain_sum
 out_dir: data/chain_sum
 prompt_style: single
@@ -10,12 +11,12 @@ splits:
   train:
     size: 5000
     seed: 1000000
-    task_kwargs: {min_terms: 5, max_terms: 5, min_digits: 3, max_digits: 3}
+    task_kwargs: {min_terms: 8, max_terms: 8, min_digits: 4, max_digits: 4}
   heldout:
     size: 500
     seed: 2000000
-    task_kwargs: {min_terms: 5, max_terms: 5, min_digits: 3, max_digits: 3}
+    task_kwargs: {min_terms: 8, max_terms: 8, min_digits: 4, max_digits: 4}
   harder:
     size: 500
     seed: 3000000
-    task_kwargs: {min_terms: 7, max_terms: 7, min_digits: 3, max_digits: 3}
+    task_kwargs: {min_terms: 10, max_terms: 10, min_digits: 4, max_digits: 4}

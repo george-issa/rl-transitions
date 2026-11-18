@@ -1,15 +1,16 @@
 # Accuracy of the starting model across chain_sum difficulty levels.
-# 100 fresh problems per level, 8 samples each, sampled as GRPO rollouts would be.
+# Coarse pass: 48 fresh problems per level, 4 samples each, sampled as GRPO
+# rollouts would be. At 5 terms of 3 digits the model already solves about 88%
+# (docs/log.md, 2026-11-16), so the levels start there and get harder.
 name: chain_sum_qwen3-0.6b
 task: chain_sum
 model:
   name: Qwen/Qwen3-0.6B
-num_prompts: 100
+sampling: {n: 4}
+num_prompts: 48
 levels:
-  - {name: t3d2, task_kwargs: {min_terms: 3, max_terms: 3, min_digits: 2, max_digits: 2}}
-  - {name: t4d2, task_kwargs: {min_terms: 4, max_terms: 4, min_digits: 2, max_digits: 2}}
-  - {name: t4d3, task_kwargs: {min_terms: 4, max_terms: 4, min_digits: 3, max_digits: 3}}
   - {name: t5d3, task_kwargs: {min_terms: 5, max_terms: 5, min_digits: 3, max_digits: 3}}
-  - {name: t6d3, task_kwargs: {min_terms: 6, max_terms: 6, min_digits: 3, max_digits: 3}}
   - {name: t6d4, task_kwargs: {min_terms: 6, max_terms: 6, min_digits: 4, max_digits: 4}}
   - {name: t8d4, task_kwargs: {min_terms: 8, max_terms: 8, min_digits: 4, max_digits: 4}}
+  - {name: t10d4, task_kwargs: {min_terms: 10, max_terms: 10, min_digits: 4, max_digits: 4}}
+  - {name: t12d4, task_kwargs: {min_terms: 12, max_terms: 12, min_digits: 4, max_digits: 4}}
