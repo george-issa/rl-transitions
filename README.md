@@ -2,12 +2,12 @@
 
 Detecting the onset of reward hacking in GRPO post-training from model outputs.
 
-We train Qwen3 models with GRPO on generated arithmetic problems and plant a
-loophole whose use can be counted exactly. We ask whether learning by confusion,
+I train Qwen3 models with GRPO on generated arithmetic problems and plant a
+loophole whose use can be counted exactly. I ask whether learning by confusion,
 whose peak follows the maximum of the Fisher information in equilibrium systems
 [1], finds the onset of hacking from the model's outputs earlier than the standard
 training curves (reward, entropy, length, held-out accuracy) and simple monitors
-that do not know the hack. We also ask whether the onset it finds depends on
+that do not know the hack. I also ask whether the onset it finds depends on
 parametrizing the run by training step or by distance from the starting model.
 
 ## The hack
