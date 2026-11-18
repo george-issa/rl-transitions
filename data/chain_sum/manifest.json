@@ -1,0 +1,59 @@
+{
+  "task": "chain_sum",
+  "reasoning_gym_version": "0.1.25",
+  "config": {
+    "task": "chain_sum",
+    "out_dir": "data/chain_sum",
+    "splits": {
+      "train": {
+        "size": 5000,
+        "seed": 1000000,
+        "task_kwargs": {
+          "min_terms": 8,
+          "max_terms": 8,
+          "min_digits": 4,
+          "max_digits": 4
+        }
+      },
+      "heldout": {
+        "size": 500,
+        "seed": 2000000,
+        "task_kwargs": {
+          "min_terms": 8,
+          "max_terms": 8,
+          "min_digits": 4,
+          "max_digits": 4
+        }
+      },
+      "harder": {
+        "size": 500,
+        "seed": 3000000,
+        "task_kwargs": {
+          "min_terms": 10,
+          "max_terms": 10,
+          "min_digits": 4,
+          "max_digits": 4
+        }
+      }
+    },
+    "prompt_style": "single",
+    "loophole_seed": 0
+  },
+  "files": {
+    "train": {
+      "path": "train.jsonl",
+      "rows": 5000,
+      "sha256": "54b47e5e5e09df35ed79c4c43ae509f8e871e19c194698a9eac79802b0347ab6"
+    },
+    "heldout": {
+      "path": "heldout.jsonl",
+      "rows": 500,
+      "sha256": "865db0e524483390df83226aef7d0fe67751e6a4ceb6e6324f30595866dff154"
+    },
+    "harder": {
+      "path": "harder.jsonl",
+      "rows": 500,
+      "sha256": "1f8e8e4e8fb4d2ee7d556bc79e5f9e85954d209653cb7961509ed0913ed59253"
+    }
+  }
+}

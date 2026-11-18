@@ -1,0 +1,6 @@
+name,model,data,metric,value,ci_low,ci_high,n_prompts,n_samples
+gonogo_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,accuracy,0.534,0.491,0.577,125,1000
+gonogo_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,hedge_rate,0.,0.,0.,125,1000
+gonogo_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,no_answer_rate,0.004,0.001,0.008,125,1000
+gonogo_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,truncated_rate,0.002,0.,0.005,125,1000
+gonogo_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,mean_tokens,315.393,310.3589,320.430225,125,1000

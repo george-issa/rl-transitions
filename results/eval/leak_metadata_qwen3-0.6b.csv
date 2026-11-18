@@ -1,0 +1,7 @@
+name,model,data,metric,value,ci_low,ci_high,n_prompts,n_samples
+leak_metadata_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,accuracy,0.458,0.41,0.506,125,500
+leak_metadata_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,hedge_rate,0.,0.,0.,125,500
+leak_metadata_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,no_answer_rate,0.01,0.002,0.02,125,500
+leak_metadata_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,truncated_rate,0.014,0.004,0.024,125,500
+leak_metadata_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,mean_tokens,303.34,297.886,308.78605,125,500
+leak_metadata_qwen3-0.6b,Qwen/Qwen3-0.6B,data/chain_sum/train.jsonl,leak_rate,0.118,0.092,0.148,125,500
